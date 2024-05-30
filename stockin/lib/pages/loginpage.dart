@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stockin/layout/login_page_layout.dart';
 
 class loginPage extends StatefulWidget {
-  final List <Widget> children;
-  const loginPage({
-    super.key,
-    required this.children,});
+  const loginPage({super.key,});
   
   @override
   State<loginPage> createState() => loginPageState();
