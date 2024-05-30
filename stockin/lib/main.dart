@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stockin/pages/homepage.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const homepage());
 }
 
 class MainApp extends StatelessWidget {
