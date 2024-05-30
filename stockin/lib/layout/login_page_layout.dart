@@ -10,7 +10,7 @@ class LoginCardLayout extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: Color(),
+          color: Color(0xff41B06E),
           width: 6.0
         ),
         borderRadius: BorderRadius.circular(30.0)
