@@ -7,13 +7,17 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
+  curved_navigation_bar: ^1.0.3
+  floating_navbar: ^2.0.2
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+  - lib/assets/
