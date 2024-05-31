@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stockin/pages/homepage.dart';
+import 'package:stockin/pages/inputbahanpage.dart';
 
 void main() {
-  runApp(const homepage());
+  runApp(inputBarangPage());
 }
 
 class MainApp extends StatelessWidget {
