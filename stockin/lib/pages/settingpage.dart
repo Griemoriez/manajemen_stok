@@ -19,6 +19,13 @@ Future <void> logoutHandle () async{
 }
 
 
+Future <void> profileHandle () async{
+
+
+}
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -127,31 +134,67 @@ Future <void> logoutHandle () async{
                       ),
                     ),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(220,40),
-                                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 152.0),
-                                backgroundColor: Color(0xff41B06E),
-                                foregroundColor: Color(0xffFFFFFF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),)
-                                  ),
-                              onPressed: logoutHandle,
-                              child: Text("Profile", style: TextStyle(fontSize: 20.0, color: Color(0xffFFFFFF)),),
-                                ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(220,40),
-                                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 152.0),
-                                backgroundColor: Color(0xff41B06E),
-                                foregroundColor: Color(0xffFFFFFF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),)
-                                  ),
-                              onPressed: logoutHandle,
-                              child: Text("Logout", style: TextStyle(fontSize: 20.0, color: Color(0xffFFFFFF)),),
-                                )
+                    
+                    GestureDetector(
+                    onTap: () {
+                      profileHandle();
+                      // Handle profile tap
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.greenAccent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.person, color: Colors.black),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'Profile',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.arrow_forward, color: Colors.black),
+                        ],
+                      ),
+                    ),
+                  ),
+                    GestureDetector(
+                    onTap: () {
+                      logoutHandle();
+                      // Handle sign out tap
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.greenAccent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.exit_to_app, color: Colors.black),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'Sign Out',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.arrow_forward, color: Colors.black),
+                        ],
+                      ),
+                    ),
+                  ),
                           ],
                         ),
                       )                                      
