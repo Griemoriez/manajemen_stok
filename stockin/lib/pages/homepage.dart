@@ -6,9 +6,14 @@ import 'package:stockin/component/card.dart';
 import 'package:stockin/pages/absenpage.dart';
 import 'package:stockin/pages/inputbahanpage.dart';
 
-class homepage extends StatelessWidget {
+class homepage extends StatefulWidget {
   const homepage({super.key});
 
+  @override
+  State<homepage> createState() => _homepageState();
+}
+
+class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

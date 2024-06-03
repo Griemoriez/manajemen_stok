@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stockin/pages/homepage.dart';
-import 'package:stockin/pages/inputbahanpage.dart';
+import 'package:stockin/pages/loginpage.dart';
+import 'package:stockin/pages/settingpage.dart';
 
 void main() {
-  runApp(inputBarangPage());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -12,10 +13,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+      home: LoginPage(
+        
       ),
     );
   }
