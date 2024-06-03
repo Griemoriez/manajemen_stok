@@ -26,45 +26,6 @@ class _inputBarangPageState extends State<inputBarangPage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xff2B314A),
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-            child: Text(
-              "Manajemen Stok",
-              style: TextStyle(
-                  color: Color(0xff41B06E), fontWeight: FontWeight.bold),
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, top: 10.0),
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_outlined),
-                color: Colors.white,
-                onPressed: () {},
-              ),
-            )
-          ],
-        ),
-        bottomNavigationBar: CurvedNavigationBar(
-          items: const [
-            Icon(
-              Icons.home_rounded,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.add_box,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.monetization_on_rounded,
-              color: Colors.white,
-            ),
-          ],
-          color: Color(0xff41B06E),
-          backgroundColor: Colors.white,
-        ),
         body: Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Column(

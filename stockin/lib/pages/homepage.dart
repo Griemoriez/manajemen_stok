@@ -1,19 +1,62 @@
+import 'dart:convert';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:floating_navbar/floating_navbar.dart';
-import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:stockin/component/card.dart';
 import 'package:stockin/pages/absenpage.dart';
+import 'package:stockin/pages/detaildivisi.dart';
 import 'package:stockin/pages/inputbahanpage.dart';
+import 'package:stockin/pages/listview.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
 
   @override
-  State<homepage> createState() => _homepageState();
+  State<homepage> createState() => _HomepageState();
 }
 
-class _homepageState extends State<homepage> {
+class _HomepageState extends State<homepage> {
+  int _selectedIndex = 0;
+  final PageController _pageController = PageController();
+
+  List<Map<String, dynamic>> listProyek = [];
+
+  Future<void> getProyek() async {
+    String urlGetProyek = "http://berkatnusantara.com:5868/proyek";
+    try {
+      var req = await http.get(Uri.parse(urlGetProyek));
+      if (req.statusCode == 200) {
+        final data = jsonDecode(req.body);
+        List listGet = data['data'];
+        setState(() {
+          for (var index in listGet) {
+            listProyek.add({
+              'id': index['id'],
+              'nama': index['nama'].toString(),
+              'alamat': index['alamat'].toString(),
+              'path': "lib/assets/rumah1.jpg"
+            });
+          }
+        });
+      }
+    } catch (e) {
+      print("Exception caught: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProyek();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    _pageController.jumpToPage(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,29 +101,41 @@ class _homepageState extends State<homepage> {
           ],
           color: Color(0xff41B06E),
           backgroundColor: Colors.white,
+          onTap: _onItemTapped,
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 40),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15, bottom: 5),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Hi Nathan!",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          children: [
+            // Your first page (Home Page)
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, bottom: 5),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Hi Nathan!",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                  child: Container(
+                  Expanded(
+                    child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15.0),
-                              topRight: Radius.circular(15.0))),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0),
+                        ),
+                      ),
                       child: Column(
                         children: [
                           Padding(
@@ -96,30 +151,19 @@ class _homepageState extends State<homepage> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 600,
-                            width: double.infinity,
-                            child: ListView(
-                              children: [
-                                v_card(
-                                    title: "Proyek A",
-                                    description: "babi",
-                                    path: "lib/assets/rumah1.jpg"),
-                                v_card(
-                                    title: "Proyek A",
-                                    description: "babi",
-                                    path: "lib/assets/rumah1.jpg"),
-                                v_card(
-                                    title: "Proyek A",
-                                    description: "babi",
-                                    path: "lib/assets/rumah1.jpg")
-                              ],
-                            ),
-                          )
+                          listview(height: 600, type: "p", myList: listProyek),
                         ],
-                      )))
-            ],
-          ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Your second page
+            inputBarangPage(),
+            // Your third page
+            detailDivisi(),
+          ],
         ),
       ),
     );
