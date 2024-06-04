@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stockin/pages/detailGudang.dart';
+import 'package:stockin/pages/detailpage.dart';
 import 'package:stockin/pages/homepage.dart';
 import 'package:stockin/pages/loginpage.dart';
 import 'package:stockin/pages/settingpage.dart';
@@ -13,7 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: homepage(),
+      home: detailGudang(),
     );
   }
 }

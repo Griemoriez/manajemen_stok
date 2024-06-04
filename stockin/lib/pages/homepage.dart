@@ -143,6 +143,23 @@ class _HomepageState extends State<homepage> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
+                                "Gudang",
+                                style: TextStyle(
+                                    color: Color(0xff41B06E),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          v_card(
+                              title: "Gudang Induk",
+                              description: "jl. babi",
+                              path: "lib/assets/rumah1.jpg"),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15, top: 20),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
                                 "List Proyek",
                                 style: TextStyle(
                                     color: Color(0xff41B06E),
@@ -151,7 +168,7 @@ class _HomepageState extends State<homepage> {
                               ),
                             ),
                           ),
-                          listview(height: 600, type: "p", myList: listProyek),
+                          listview(height: 500, type: "p", myList: listProyek),
                         ],
                       ),
                     ),

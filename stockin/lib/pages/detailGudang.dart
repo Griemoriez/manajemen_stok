@@ -5,24 +5,18 @@ import 'package:http/http.dart' as http;
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:stockin/component/cardDivisi.dart';
 
-class detailProyek extends StatefulWidget {
-  final int id;
-  final String nama;
-  final String alamat;
-  const detailProyek(
-      {Key? key, required this.id, required this.nama, required this.alamat})
-      : super(key: key);
+class detailGudang extends StatefulWidget {
+  const detailGudang({super.key});
 
   @override
-  State<detailProyek> createState() => _detailProyekState();
+  State<detailGudang> createState() => _detailProyekState();
 }
 
-class _detailProyekState extends State<detailProyek> {
+class _detailProyekState extends State<detailGudang> {
   List<Map<String, dynamic>> listStokProyek = [];
   List<DataRow> allRowTable = [];
   Future<void> getStokProyek() async {
-    String urlGetStokProyek =
-        "http://berkatnusantara.com:5868/stokProyek/${widget.id}";
+    String urlGetStokProyek = "http://berkatnusantara.com:5868/stokGudang";
     try {
       var req = await http.get(Uri.parse(urlGetStokProyek));
       if (req.statusCode == 200) {
@@ -97,7 +91,7 @@ class _detailProyekState extends State<detailProyek> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${widget.nama}",
+                          "Gudang Induk",
                           style: TextStyle(
                               color: Color(0xff41B06E),
                               fontSize: 42,
@@ -106,7 +100,7 @@ class _detailProyekState extends State<detailProyek> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Text(
-                            "Alamat : ${widget.alamat}",
+                            "Alamat : Jl babi1 no. 150",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
@@ -117,27 +111,26 @@ class _detailProyekState extends State<detailProyek> {
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         Expanded(
-                          child: SingleChildScrollView(
-                            child: DataTable(
-                              columns: [
-                                DataColumn(
-                                    label: Text(
-                                  "No.",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                                DataColumn(
-                                    label: Text("Nama Bahan",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold))),
-                                DataColumn(
-                                    label: Text("Stok",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)))
-                              ],
-                              rows: allRowTable,
-                            ),
-                          )
-                        )
+                            child: SingleChildScrollView(
+                          child: DataTable(
+                            columns: [
+                              DataColumn(
+                                  label: Text(
+                                "No.",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
+                              DataColumn(
+                                  label: Text("Nama Bahan",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold))),
+                              DataColumn(
+                                  label: Text("Stok",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)))
+                            ],
+                            rows: allRowTable,
+                          ),
+                        ))
                       ],
                     ),
                   ),
