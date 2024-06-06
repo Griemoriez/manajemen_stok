@@ -20,10 +20,55 @@ class _inputBarangPageState extends State<inputBarangPage> {
   String _selectedAsal = 'Gudang';
   List<String> _dropdownItemTujuan = ['Gudang'];
   List<Map<String, dynamic>> _dropdownItemBahan = [];
+  String keteranganBahan = "";
+  int jumlahBahan = 0;
+  String convert = "";
+  TextEditingController keteranganController = TextEditingController();
+  TextEditingController jumlahBahanController = TextEditingController();
 
   Future<void> getAllData() async {
     await getProyek();
     await getBarang();
+  }
+
+  Future<void> insertBarangGudang() async {
+    final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
+
+    keteranganBahan = keteranganController.toString();
+    convert = jumlahBahanController.toString();
+    jumlahBahan = int.parse(convert);
+
+    var response = await http.post(url, body: {
+      "barang": "semen",
+      "id": 1,
+      "id_barang": 1,
+      "keluar": "0",
+      "keterangan": "-",
+      "masuk": "0",
+      "timestamp": " "
+    });
+
+    try {
+      if (response.statusCode == 200) {
+        print('Face data successfully sent to backend using form data');
+        Map<String, dynamic> data = jsonDecode(response.body);
+
+        // var response1 = await http.get(Uri.parse('http://berkatnusantara.com:5868/tukang'));
+        // data [data];
+        //String
+        String id = data['data']['id'];
+        print(id);
+      }
+    } catch (e) {
+      print('Error sending face data to backend using form data: $e');
+    }
+  }
+
+  Future<void> insertBarangProyek() async {
+    final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
+
+    var response =
+        await http.post(url, body: {'id': 0, 'id_jenis:': 1, 'nama': name});
   }
 
   Future<void> getProyek() async {
@@ -237,6 +282,7 @@ class _inputBarangPageState extends State<inputBarangPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 20),
                             child: TextField(
+                              controller: jumlahBahanController,
                               decoration: InputDecoration(
                                   hintText: 'cth 1, 2, 3',
                                   filled: true,
@@ -248,6 +294,26 @@ class _inputBarangPageState extends State<inputBarangPage> {
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 16.0, vertical: 12.0),
                                   labelText: 'Masukkan Jumlah',
+                                  labelStyle:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 20),
+                            child: TextField(
+                              controller: keteranganController,
+                              decoration: InputDecoration(
+                                  hintText: 'cth 1, 2, 3',
+                                  filled: true,
+                                  fillColor: Color(0xff8DECB4),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 12.0),
+                                  labelText: 'Masukkan Keterangan',
                                   labelStyle:
                                       TextStyle(fontWeight: FontWeight.bold)),
                             ),
