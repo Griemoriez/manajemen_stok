@@ -15,11 +15,11 @@ class inputBarangPage extends StatefulWidget {
 class _inputBarangPageState extends State<inputBarangPage> {
   List<String> _dropdownItemAsal = ['Gudang', 'Toko'];
   String _selectedTujuan = 'Proyek A';
-  String _selectedBahan = 'Kayu';
+  Map<String, dynamic> _selectedBahan = {};
   List<String> _dropdownItemAsalFiltered = ['Gudang', 'Toko'];
   String _selectedAsal = 'Gudang';
   List<String> _dropdownItemTujuan = ['Gudang'];
-  List<String> _dropdownItemBahan = [];
+  List<Map<String, dynamic>> _dropdownItemBahan = [];
 
   Future<void> getAllData() async {
     await getProyek();
@@ -62,11 +62,16 @@ class _inputBarangPageState extends State<inputBarangPage> {
         setState(() {
           _dropdownItemBahan.clear();
           for (var index in listGet2) {
-            _dropdownItemBahan.add(index['nama'].toString());
+            _dropdownItemBahan
+                .add({'id': index['id'], 'nama': index['nama'].toString()});
           }
-          if (!_dropdownItemBahan.contains(_selectedBahan)) {
+          bool containsSelectedBahan = _dropdownItemBahan.any((item) =>
+              item['id'] == _selectedBahan['id'] &&
+              item['nama'] == _selectedBahan['nama']);
+
+          if (!containsSelectedBahan) {
             _selectedBahan =
-                _dropdownItemBahan.isNotEmpty ? _dropdownItemBahan[0] : '';
+                (_dropdownItemBahan.isNotEmpty ? _dropdownItemBahan[0] : null)!;
           }
         });
       }
@@ -90,6 +95,10 @@ class _inputBarangPageState extends State<inputBarangPage> {
       _dropdownItemAsalFiltered = ['Gudang', 'Toko'];
       _selectedAsal = 'Gudang';
     }
+  }
+
+  void _printSelectedBahan() {
+    print("Selected Bahan: $_selectedBahan");
   }
 
   @override
@@ -194,13 +203,18 @@ class _inputBarangPageState extends State<inputBarangPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 15),
-                            child: DropdownButtonFormField(
-                              value: _selectedBahan,
-                              items: _dropdownItemBahan.map((String item) {
-                                return DropdownMenuItem(
-                                    value: item, child: Text(item));
+                            child:
+                                DropdownButtonFormField<Map<String, dynamic>>(
+                              value: _selectedBahan.isNotEmpty
+                                  ? _selectedBahan
+                                  : null,
+                              items: _dropdownItemBahan.map((item) {
+                                return DropdownMenuItem<Map<String, dynamic>>(
+                                  value: item,
+                                  child: Text(item['nama']),
+                                );
                               }).toList(),
-                              onChanged: (String? value) {
+                              onChanged: (value) {
                                 setState(() {
                                   _selectedBahan = value!;
                                 });
@@ -245,7 +259,9 @@ class _inputBarangPageState extends State<inputBarangPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _printSelectedBahan();
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Color(0xff2B314A),
                                       foregroundColor: Colors.white,
