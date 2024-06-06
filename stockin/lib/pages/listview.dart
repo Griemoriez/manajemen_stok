@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stockin/component/card.dart';
+import 'package:stockin/pages/detailpage.dart';
 
 class listview extends StatelessWidget {
   final double height;
@@ -21,10 +22,24 @@ class listview extends StatelessWidget {
         itemCount: myList.length,
         itemBuilder: (context, index) {
           var key = myList[index];
-          return v_card(
-              path: key['path'].toString(),
-              title: key['nama'].toString(),
-              description: key['alamat'].toString());
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => detailProyek(
+                    id: key['id'],
+                    nama: key['nama'].toString(),
+                    alamat: key['alamat'].toString(),
+                  ),
+                ),
+              );
+            },
+            child: v_card(
+                path: key['path'].toString(),
+                title: key['nama'].toString(),
+                description: key['alamat'].toString()),
+          );
         },
       ),
     );
