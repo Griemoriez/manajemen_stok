@@ -3,7 +3,11 @@ import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:stockin/component/card.dart';
+import 'package:stockin/component/cardDivisi.dart';
+import 'package:stockin/component/cardTukang.dart';
 import 'package:stockin/pages/absenpage.dart';
+import 'package:stockin/pages/detaildivisi.dart';
+import 'package:stockin/pages/homepage.dart';
 import 'package:stockin/pages/inputbahanpage.dart';
 
 
@@ -30,31 +34,19 @@ class absenPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10.0, top: 10.0),
               child: IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.arrow_back),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {{
+                                Navigator.pushReplacement( 
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const homepage())
+                                );
+                              }},
               ),
             )
           ],
         ),
-        bottomNavigationBar: CurvedNavigationBar(
-          items: const [
-            Icon(
-              Icons.home_rounded,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.add_box,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.monetization_on_rounded,
-              color: Colors.white,
-            ),
-          ],
-          color: Color(0xff41B06E),
-          backgroundColor: Colors.white,
-        ),
+        
         body: Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Column(
@@ -97,18 +89,21 @@ class absenPage extends StatelessWidget {
                             width: double.infinity,
                             child: ListView(
                               children: [
-                                v_card(
+                                div_cardTukang(
                                     title: "Moh Supri",
-                                    description: "Divisi",
+                                    jumlahGaji: "Gaji : Rp 300.000",
+                                    jumlahAbsen: "2 hari",
                                     path: "lib/assets/rumah1.jpg"),
-                                v_card(
-                                    title: "Bagus",
-                                    description: "babi",
+                                div_cardTukang(
+                                    title: "Usdik",
+                                    jumlahGaji: "Gaji : Rp 450.000",
+                                    jumlahAbsen: "3 hari",
                                     path: "lib/assets/rumah1.jpg"),
-                                v_card(
-                                    title: "Gono",
-                                    description: "babi",
-                                    path: "lib/assets/rumah1.jpg")
+                                div_cardTukang(
+                                    title: "Saiful",
+                                    jumlahGaji: "Gaji : Rp 600.000",
+                                    jumlahAbsen: "4 hari",
+                                    path: "lib/assets/rumah1.jpg"),
                               ],
                             ),
                           )

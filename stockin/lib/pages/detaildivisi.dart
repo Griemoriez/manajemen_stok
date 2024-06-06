@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:stockin/component/cardDivisi.dart';
+import 'package:stockin/pages/absenpage.dart';
 
 class detailDivisi extends StatelessWidget {
   const detailDivisi({super.key});
@@ -11,6 +12,7 @@ class detailDivisi extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xff2B314A),
+        
         body: Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Column(
@@ -48,11 +50,21 @@ class detailDivisi extends StatelessWidget {
                           ),
                         ),
                       ),
-                      div_card(
+                      GestureDetector(
+                      onTap: (){
+                        {
+                                Navigator.pushReplacement( 
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const absenPage())
+                                );
+                              }
+                      },
+                      child : div_card(
                           title: "Divisi Tukang Batu",
-                          jumlahTukang: "10",
-                          jumlahGaji: "1000000",
-                          path: "lib/assets/rumah1.jpg")
+                          jumlahTukang: "3",
+                          jumlahGaji: "Rp 1.350.000",
+                          path: "lib/assets/rumah1.jpg"),
+                      ),
                     ],
                   ),
                 ),

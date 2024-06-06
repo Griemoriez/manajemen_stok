@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:stockin/component/cardDivisi.dart';
+import 'package:stockin/pages/homepage.dart';
 
 class detailGudang extends StatefulWidget {
   const detailGudang({super.key});
@@ -61,6 +62,35 @@ class _detailProyekState extends State<detailGudang> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              "Manajemen Stok",
+              style: TextStyle(
+                  color: Color(0xff41B06E), fontWeight: FontWeight.bold),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0, top: 10.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () {
+                  {
+                          Navigator.pushReplacement( 
+                          context,
+                          MaterialPageRoute(builder: (context) => const homepage())
+                        );
+                      }
+
+                },
+              ),
+            )
+          ],
+        ),
         backgroundColor: Color(0xff2B314A),
         body: Padding(
           padding: const EdgeInsets.only(top: 40),
@@ -100,7 +130,7 @@ class _detailProyekState extends State<detailGudang> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Text(
-                            "Alamat : Jl babi1 no. 150",
+                            "Alamat : Jl Terusan Borobudur no. 150",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
