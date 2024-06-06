@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -31,45 +32,102 @@ class _inputBarangPageState extends State<inputBarangPage> {
     await getBarang();
   }
 
+  // Future<void> insertBarangGudang() async {
+  
+
+  //   keteranganBahan = keteranganController.text;
+    // convert = jumlahBahanController.text;
+    // jumlahBahan = int.parse(convert);
+  //   String nama_barang = _selectedBahan['nama'].toString(); 
+  //   print(nama_barang);
+  //   print(_selectedBahan['id']);
+  //   print(keteranganBahan);
+  //   print(jumlahBahan);
+    
+  //   int id_barang = int.parse(_selectedBahan["id"].toString());
+  //   int idBarang1 = id_barang;
+  //   print(idBarang1);
+  //   String getCurrentDateTime() {
+  //     DateTime now = DateTime.now();
+  //     DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+  //     return formatter.format(now);
+  //   }
+
+  //   print(getCurrentDateTime());
+
+  //   final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
+  //   var response = await http.post(
+  //       url,
+  //       body: {
+  //         'barang' : nama_barang,
+  //         'id' : 1,
+  //         'id_barang' : idBarang1,
+  //         'keluar' : 0,
+  //         'keterangan' : keteranganBahan,
+  //         'masuk' : jumlahBahan,
+  //         'timestamp' : getCurrentDateTime()
+  //       }
+  //     );
+
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       print('Face data successfully sent to backend using form data');
+  //       print("post succes");
+  //     }
+  //   } catch (e) {
+  //     print('Error sending face data to backend using form data: $e');
+  //   }
+  // }
+  // 
   Future<void> insertBarangGudang() async {
-    final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
-
-    keteranganBahan = keteranganController.toString();
-    convert = jumlahBahanController.toString();
+  try {
+    keteranganBahan = keteranganController.text;
+    convert = jumlahBahanController.text;
     jumlahBahan = int.parse(convert);
+    String nama_barang = _selectedBahan['nama']?.toString() ?? ''; 
+    int id_barang = int.tryParse(_selectedBahan["id"]?.toString() ?? '') ?? 0;
+    int idBarang1 = id_barang;
 
-    var response = await http.post(url, body: {
-      "barang": "semen",
-      "id": 1,
-      "id_barang": 1,
-      "keluar": "0",
-      "keterangan": "-",
-      "masuk": "0",
-      "timestamp": " "
-    });
-
-    try {
-      if (response.statusCode == 200) {
-        print('Face data successfully sent to backend using form data');
-        Map<String, dynamic> data = jsonDecode(response.body);
-
-        // var response1 = await http.get(Uri.parse('http://berkatnusantara.com:5868/tukang'));
-        // data [data];
-        //String
-        String id = data['data']['id'];
-        print(id);
-      }
-    } catch (e) {
-      print('Error sending face data to backend using form data: $e');
+    String getCurrentDateTime() {
+      DateTime now = DateTime.now();
+      DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+      return formatter.format(now);
     }
-  }
 
-  Future<void> insertBarangProyek() async {
-    final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
+    final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
+    var response = await http.post(
+      url,
+      body: {
+        'barang': nama_barang,
+        'id': '1',  // Send as string
+        'id_barang': idBarang1.toString(), // Convert integer to string
+        'keluar': '0',  // Send as string
+        'keterangan': keteranganBahan,
+        'masuk': jumlahBahan.toString(),  // Convert integer to string
+        'timestamp': getCurrentDateTime()
+      },
+    );
 
-    var response =
-        await http.post(url, body: {'id': 0, 'id_jenis:': 1, 'nama': name});
+    if (response.statusCode == 200) {
+      print('Data successfully sent to backend');
+      print("Post success");
+    } else if (response.statusCode == 500) {
+    // Handle server error
+    print('Internal Server Error: ${response.body}');
+    }else {
+      print('Failed to send data with status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error occurred: $e');
   }
+}
+
+  // Future<void> insertBarangProyek() async {
+  //   final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
+
+  //   var response =
+  //       await http.post(url, body: {'id': 0, 'id_jenis:': 1, 'nama': name});
+  // }
 
   Future<void> getProyek() async {
     String getProyek = "http://berkatnusantara.com:5868/proyek";
@@ -325,8 +383,9 @@ class _inputBarangPageState extends State<inputBarangPage> {
                               children: [
                                 Expanded(
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      _printSelectedBahan();
+                                    onPressed: (){
+                                      insertBarangGudang();
+                                    
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Color(0xff2B314A),
