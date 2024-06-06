@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stockin/component/card.dart';
 import 'package:stockin/pages/absenpage.dart';
+import 'package:stockin/pages/detailGudang.dart';
 import 'package:stockin/pages/detaildivisi.dart';
 import 'package:stockin/pages/inputbahanpage.dart';
 import 'package:stockin/pages/listview.dart';
+import 'package:stockin/pages/settingpage.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -79,7 +81,14 @@ class _HomepageState extends State<homepage> {
               child: IconButton(
                 icon: Icon(Icons.settings),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  {
+                                Navigator.pushReplacement( 
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const settingPage())
+                                );
+                              }
+                },
               ),
             )
           ],
@@ -151,10 +160,23 @@ class _HomepageState extends State<homepage> {
                               ),
                             ),
                           ),
-                          v_card(
+
+                          GestureDetector(
+                            onTap: () {
+                              {
+                                Navigator.pushReplacement( 
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const detailGudang())
+                                );
+                              }
+                            },
+                            child: v_card(
                               title: "Gudang Induk",
-                              description: "jl. babi",
+                              description: "jl. Terusan Borobudur",
                               path: "lib/assets/rumah1.jpg"),
+                          ),
+                    
+                              
                           Padding(
                             padding: const EdgeInsets.only(left: 15, top: 20),
                             child: Align(

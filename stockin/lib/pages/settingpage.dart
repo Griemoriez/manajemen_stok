@@ -2,6 +2,8 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:stockin/pages/homepage.dart';
+import 'package:stockin/pages/loginpage.dart';
 
 class settingPage extends StatefulWidget{
   const settingPage({super.key});
@@ -13,10 +15,6 @@ class settingPage extends StatefulWidget{
 class settingPageState extends State <settingPage>{
 
 
-Future <void> logoutHandle () async{
-
-
-}
 
 
 Future <void> profileHandle () async{
@@ -48,29 +46,17 @@ Future <void> profileHandle () async{
               child: IconButton(
                 icon: Icon(Icons.arrow_back),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {{
+                                Navigator.pushReplacement( 
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const homepage())
+                                );
+                              }},
               ),
             )
           ],
         ),
-        bottomNavigationBar: CurvedNavigationBar(
-          items: const [
-            Icon(
-              Icons.home_rounded,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.add_box,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.monetization_on_rounded,
-              color: Colors.white,
-            ),
-          ],
-          color: Color(0xff41B06E),
-          backgroundColor: Colors.white,
-        ),
+        
         body:Column(
           
             children: [
@@ -166,10 +152,19 @@ Future <void> profileHandle () async{
                     ),
                   ),
                     GestureDetector(
-                    onTap: () {
-                      logoutHandle();
-                      // Handle sign out tap
-                    },
+                      onTap: () {            
+                        info1 = false;
+                        username = "";
+                        pwd = "";
+                        print(info1);
+                        print(pwd);
+                        print(username);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage())
+                        );
+                      }, 
+                    
                     child: Container(
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
