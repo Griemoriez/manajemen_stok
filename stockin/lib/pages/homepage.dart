@@ -83,11 +83,11 @@ class _HomepageState extends State<homepage> {
                 color: Colors.white,
                 onPressed: () {
                   {
-                                Navigator.pushReplacement( 
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const settingPage())
-                                );
-                              }
+                    Navigator.pushReplacement( 
+                      context,
+                      MaterialPageRoute(builder: (context) => const settingPage())
+                    );
+                  }
                 },
               ),
             )

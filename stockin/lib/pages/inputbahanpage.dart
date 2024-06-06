@@ -36,7 +36,6 @@ class _inputBarangPageState extends State<inputBarangPage> {
         List listGet1 = data1['data'];
 
         setState(() {
-          _dropdownItemTujuan.clear();
           for (var index in listGet1) {
             _dropdownItemTujuan.add(index['nama'].toString());
           }
