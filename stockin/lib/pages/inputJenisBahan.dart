@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class inputJenisBahan extends StatefulWidget {
   const inputJenisBahan({super.key});
@@ -7,8 +10,40 @@ class inputJenisBahan extends StatefulWidget {
   State<inputJenisBahan> createState() => _inputJenisBahanState();
 }
 
+
 class _inputJenisBahanState extends State<inputJenisBahan> {
+
   TextEditingController namaController = TextEditingController();
+  String namaBahan = "";
+
+  Future<void> insertJenisBahan() async {
+    try {
+      namaBahan = namaController.text;
+
+      
+      Map<String,dynamic> data = {
+            "id": 0,
+            "nama": namaBahan
+          };
+
+      final url = Uri.parse('http://berkatnusantara.com:5868/barang');
+      var response = await http.post(
+          url,
+          body: jsonEncode(data)
+        );
+
+      if (response.statusCode == 200) {
+        print('Data successfully sent to backend');
+        print("Post success");
+      } else {
+        print('Failed to send data with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -70,7 +105,7 @@ class _inputJenisBahanState extends State<inputJenisBahan> {
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: insertJenisBahan,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xff2B314A),
                                     foregroundColor: Colors.white,

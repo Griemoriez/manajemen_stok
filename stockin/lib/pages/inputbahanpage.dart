@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:intl/intl.dart';
 
 class inputBarangPage extends StatefulWidget {
   inputBarangPage({super.key});
@@ -34,108 +33,55 @@ class _inputBarangPageState extends State<inputBarangPage> {
     _futureData = getAllData();
   }
 
+  Future<void> insertBarangGudang() async {
+    try {
+      keteranganBahan = keteranganController.text;
+      convert = jumlahBahanController.text;
+      jumlahBahan = int.parse(convert);
+      String nama_barang = _selectedBahan['nama']?.toString() ?? ''; 
+      int id_barang = int.tryParse(_selectedBahan["id"]?.toString() ?? '') ?? 0;
+      int idBarang1 = id_barang;
+      int id_proyek = int.tryParse(_selectedTujuan.toString() ?? '') ?? 0;
+      int idProyek1 = id_proyek;
+
+      String getCurrentDateTime() {
+        DateTime now = DateTime.now();
+        DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+        return formatter.format(now);
+      }
+      Map<String,dynamic> data = {
+            'barang' : nama_barang,
+            'id' : 1,  // Assuming 'id' should be a string. If not, remove the quotes.
+            'id_barang' : idBarang1,
+            'keluar' : 0,  // Assuming 'keluar' should be a string. If not, remove the quotes.
+            'keterangan' : keteranganBahan,
+            'masuk' : jumlahBahan,  // 'masuk' is an integer as per the followup prompt
+            'timestamp' : getCurrentDateTime()
+          };
+
+      final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
+      var response = await http.post(
+          url,
+          body: jsonEncode(data)
+        );
+
+      if (response.statusCode == 200) {
+        print('Data successfully sent to backend');
+        print("Post success");
+      } else {
+        print('Failed to send data with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
   Future<void> getAllData() async {
     print('Fetching data started');
     await getProyek();
     await getBarang();
+    print('Fetching data completed');
   }
-
-  // Future<void> insertBarangGudang() async {
-  
-
-  //   keteranganBahan = keteranganController.text;
-    // convert = jumlahBahanController.text;
-    // jumlahBahan = int.parse(convert);
-  //   String nama_barang = _selectedBahan['nama'].toString(); 
-  //   print(nama_barang);
-  //   print(_selectedBahan['id']);
-  //   print(keteranganBahan);
-  //   print(jumlahBahan);
-    
-  //   int id_barang = int.parse(_selectedBahan["id"].toString());
-  //   int idBarang1 = id_barang;
-  //   print(idBarang1);
-  //   String getCurrentDateTime() {
-  //     DateTime now = DateTime.now();
-  //     DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
-  //     return formatter.format(now);
-  //   }
-
-  //   print(getCurrentDateTime());
-
-  //   final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
-  //   var response = await http.post(
-  //       url,
-  //       body: {
-  //         'barang' : nama_barang,
-  //         'id' : 1,
-  //         'id_barang' : idBarang1,
-  //         'keluar' : 0,
-  //         'keterangan' : keteranganBahan,
-  //         'masuk' : jumlahBahan,
-  //         'timestamp' : getCurrentDateTime()
-  //       }
-  //     );
-
-  //   try {
-  //     if (response.statusCode == 200) {
-  //       print('Face data successfully sent to backend using form data');
-  //       print("post succes");
-  //     }
-  //   } catch (e) {
-  //     print('Error sending face data to backend using form data: $e');
-  //   }
-  // }
-  // 
-  Future<void> insertBarangGudang() async {
-  try {
-    keteranganBahan = keteranganController.text;
-    convert = jumlahBahanController.text;
-    jumlahBahan = int.parse(convert);
-    String nama_barang = _selectedBahan['nama']?.toString() ?? ''; 
-    int id_barang = int.tryParse(_selectedBahan["id"]?.toString() ?? '') ?? 0;
-    int idBarang1 = id_barang;
-
-    String getCurrentDateTime() {
-      DateTime now = DateTime.now();
-      DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
-      return formatter.format(now);
-    }
-
-    final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
-    var response = await http.post(
-      url,
-      body: {
-        'barang': nama_barang,
-        'id': '1',  // Send as string
-        'id_barang': idBarang1.toString(), // Convert integer to string
-        'keluar': '0',  // Send as string
-        'keterangan': keteranganBahan,
-        'masuk': jumlahBahan.toString(),  // Convert integer to string
-        'timestamp': getCurrentDateTime()
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Data successfully sent to backend');
-      print("Post success");
-    } else if (response.statusCode == 500) {
-    // Handle server error
-    print('Internal Server Error: ${response.body}');
-    }else {
-      print('Failed to send data with status code: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error occurred: $e');
-  }
-}
-
-  // Future<void> insertBarangProyek() async {
-  //   final url = Uri.parse('http://berkatnusantara.com:5868/tukang');
-
-  //   var response =
-  //       await http.post(url, body: {'id': 0, 'id_jenis:': 1, 'nama': name});
-  // }
 
   Future<void> getProyek() async {
     String getProyek = "http://berkatnusantara.com:5868/proyek";
@@ -148,7 +94,7 @@ class _inputBarangPageState extends State<inputBarangPage> {
 
         if (mounted) {
           setState(() {
-            _dropdownItemTujuan.clear();
+            
             for (var index in listGet1) {
               _dropdownItemTujuan.add(index['nama'].toString());
             }
@@ -279,153 +225,26 @@ class _inputBarangPageState extends State<inputBarangPage> {
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 15),
-                            child: DropdownButtonFormField(
-                              value: _selectedTujuan,
-                              items: _dropdownItemTujuan.map((String item) {
-                                return DropdownMenuItem(
-                                    value: item, child: Text(item));
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _selectedTujuan = value!;
-                                  _updateAsalDropdown();
-                                });
-                              },
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color(0xff8DECB4),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide.none),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  labelText: 'Pilih Tujuan',
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 15),
-                            child: DropdownButtonFormField(
-                              value: _selectedAsal,
-                              items:
-                                  _dropdownItemAsalFiltered.map((String item) {
-                                return DropdownMenuItem(
-                                    value: item, child: Text(item));
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _selectedAsal = value!;
-                                });
-                              },
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color(0xff8DECB4),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide.none),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  labelText: 'Pilih Asal',
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 15),
-                            child:
-                                DropdownButtonFormField<Map<String, dynamic>>(
-                              value: _selectedBahan.isNotEmpty
-                                  ? _selectedBahan
-                                  : null,
-                              items: _dropdownItemBahan.map((item) {
-                                return DropdownMenuItem<Map<String, dynamic>>(
-                                  value: item,
-                                  child: Text(item['nama']),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedBahan = value!;
-                                });
-                              },
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color(0xff8DECB4),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide.none),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  labelText: 'Pilih Bahan',
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 20),
-                            child: TextField(
-                              controller: jumlahBahanController,
-                              decoration: InputDecoration(
-                                  hintText: 'cth 1, 2, 3',
-                                  filled: true,
-                                  fillColor: Color(0xff8DECB4),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 12.0),
-                                  labelText: 'Masukkan Jumlah',
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 20),
-                            child: TextField(
-                              controller: keteranganController,
-                              decoration: InputDecoration(
-                                  hintText: 'cth 1, 2, 3',
-                                  filled: true,
-                                  fillColor: Color(0xff8DECB4),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 12.0),
-                                  labelText: 'Masukkan Keterangan',
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 20),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                    onPressed: (){
-                                      insertBarangGudang();
-                                    
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xff2B314A),
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 15),
+                              child: DropdownButtonFormField(
+                                value: _selectedTujuan,
+                                items: _dropdownItemTujuan.map((String item) {
+                                  return DropdownMenuItem(
+                                      value: item, child: Text(item));
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _selectedTujuan = value!;
+                                    _updateAsalDropdown();
+                                  });
+                                },
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Color(0xff8DECB4),
+                                    border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                         borderSide: BorderSide.none),
@@ -548,7 +367,7 @@ class _inputBarangPageState extends State<inputBarangPage> {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        _printSelectedBahan();
+                                        insertBarangGudang();
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xff2B314A),
