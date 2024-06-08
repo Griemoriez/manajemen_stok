@@ -107,7 +107,11 @@ class settingPageState extends State<settingPage> {
                               SizedBox(height: 20),
                               GestureDetector(
                                 onTap: () {
-                                  inputJenisBahan();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const inputJenisBahan()));
                                   // Handle profile tap
                                 },
                                 child: Container(

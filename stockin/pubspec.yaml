@@ -1,10 +1,10 @@
 name: stockin
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   curved_navigation_bar: ^1.0.3
@@ -22,4 +22,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-  - lib/assets/
+    - lib/assets/
+  fonts:
+    - family: LilitaOne
+      fonts:
+        - asset: lib/assets/LilitaOne-Regular.ttf

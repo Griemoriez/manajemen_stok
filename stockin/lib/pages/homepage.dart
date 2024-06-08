@@ -71,7 +71,9 @@ class _HomepageState extends State<homepage> {
             child: Text(
               "Manajemen Stok",
               style: TextStyle(
-                  color: Color(0xff41B06E), fontWeight: FontWeight.bold),
+                  color: Color(0xff41B06E),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'LilitaOne'),
             ),
           ),
           backgroundColor: Colors.transparent,
@@ -83,10 +85,10 @@ class _HomepageState extends State<homepage> {
                 color: Colors.white,
                 onPressed: () {
                   {
-                    Navigator.pushReplacement( 
-                      context,
-                      MaterialPageRoute(builder: (context) => const settingPage())
-                    );
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const settingPage()));
                   }
                 },
               ),
@@ -131,7 +133,10 @@ class _HomepageState extends State<homepage> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Hi Nathan!",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'LilitaOne'),
                       ),
                     ),
                   ),
@@ -156,27 +161,26 @@ class _HomepageState extends State<homepage> {
                                 style: TextStyle(
                                     color: Color(0xff41B06E),
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Outfit'),
                               ),
                             ),
                           ),
-
                           GestureDetector(
                             onTap: () {
                               {
-                                Navigator.pushReplacement( 
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const detailGudang())
-                                );
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const detailGudang()));
                               }
                             },
                             child: v_card(
-                              title: "Gudang Induk",
-                              description: "jl. Terusan Borobudur",
-                              path: "lib/assets/rumah1.jpg"),
+                                title: "Gudang Induk",
+                                description: "jl. Terusan Borobudur",
+                                path: "lib/assets/rumah1.jpg"),
                           ),
-                    
-                              
                           Padding(
                             padding: const EdgeInsets.only(left: 15, top: 20),
                             child: Align(
@@ -190,7 +194,9 @@ class _HomepageState extends State<homepage> {
                               ),
                             ),
                           ),
-                          listview(height: 500, type: "p", myList: listProyek),
+                          Expanded(
+                              child: listview(
+                                  height: 500, type: "p", myList: listProyek))
                         ],
                       ),
                     ),

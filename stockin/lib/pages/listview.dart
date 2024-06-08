@@ -15,10 +15,7 @@ class listview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: double.infinity,
-      child: ListView.builder(
+    return ListView.builder(
         itemCount: myList.length,
         itemBuilder: (context, index) {
           var key = myList[index];
@@ -41,7 +38,6 @@ class listview extends StatelessWidget {
                 description: key['alamat'].toString()),
           );
         },
-      ),
     );
   }
 }
