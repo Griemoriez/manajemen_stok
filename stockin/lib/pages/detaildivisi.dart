@@ -2,9 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:stockin/component/cardDivisi.dart';
 import 'package:stockin/pages/absenpage.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
-class detailDivisi extends StatelessWidget {
+import 'dart:convert';
+
+class detailDivisi extends StatefulWidget {
   const detailDivisi({super.key});
+
+  
+  @override
+  State<detailDivisi> createState() => _detailDivisiState();
+}
+
+class _detailDivisiState extends State<detailDivisi> {
+
+  List<Map<String, dynamic>> listDivisi = [];
+  
+
+Future<void> detailDivisi() async{
+    String urlGetProyek = "http://berkatnusantara.com:5868/gaji/perdivisi";
+    try {
+      var req = await http.get(Uri.parse(urlGetProyek));
+      if (req.statusCode == 200) {
+        final data = jsonDecode(req.body);
+        List listGet = data['data'];
+        setState(() {
+          for (var index in listGet) {
+            listDivisi.add({
+              'id_jenis': index['id_jenis'],
+              'jenis': index['jenis'].toString(),
+              'jumlah_tukang': index['jumlah_tukang'].toString(),
+              'total_gaji' : index['total_gaji'].toString(),
+            });
+          }
+        });
+      }
+    } catch (e) {
+      print("Exception caught: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +79,7 @@ class detailDivisi extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "List Proyek",
+                            "List Divisi",
                             style: TextStyle(
                                 color: Color(0xff41B06E),
                                 fontSize: 18,

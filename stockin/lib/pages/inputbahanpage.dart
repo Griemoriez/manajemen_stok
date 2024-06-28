@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:intl/intl.dart';
 
 class inputBarangPage extends StatefulWidget {
   inputBarangPage({super.key});
@@ -32,6 +33,49 @@ class _inputBarangPageState extends State<inputBarangPage> {
     _futureData = getAllData();
   }
 
+  Future<void> insertBarangGudang() async {
+    try {
+      keteranganBahan = keteranganController.text;
+      convert = jumlahBahanController.text;
+      jumlahBahan = int.parse(convert);
+      String nama_barang = _selectedBahan['nama']?.toString() ?? ''; 
+      int id_barang = int.tryParse(_selectedBahan["id"]?.toString() ?? '') ?? 0;
+      int idBarang1 = id_barang;
+      int id_proyek = int.tryParse(_selectedTujuan.toString() ?? '') ?? 0;
+      int idProyek1 = id_proyek;
+
+      String getCurrentDateTime() {
+        DateTime now = DateTime.now();
+        DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+        return formatter.format(now);
+      }
+      Map<String,dynamic> data = {
+            'barang' : nama_barang,
+            'id' : 1,  // Assuming 'id' should be a string. If not, remove the quotes.
+            'id_barang' : idBarang1,
+            'keluar' : 0,  // Assuming 'keluar' should be a string. If not, remove the quotes.
+            'keterangan' : keteranganBahan,
+            'masuk' : jumlahBahan,  // 'masuk' is an integer as per the followup prompt
+            'timestamp' : getCurrentDateTime()
+          };
+
+      final url = Uri.parse('http://berkatnusantara.com:5868/stokGudang');
+      var response = await http.post(
+          url,
+          body: jsonEncode(data)
+        );
+
+      if (response.statusCode == 200) {
+        print('Data successfully sent to backend');
+        print("Post success");
+      } else {
+        print('Failed to send data with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
+
   Future<void> getAllData() async {
     print('Fetching data started');
     await getProyek();
@@ -50,7 +94,7 @@ class _inputBarangPageState extends State<inputBarangPage> {
 
         if (mounted) {
           setState(() {
-            _dropdownItemTujuan.clear();
+            
             for (var index in listGet1) {
               _dropdownItemTujuan.add(index['nama'].toString());
             }
@@ -323,7 +367,7 @@ class _inputBarangPageState extends State<inputBarangPage> {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        _printSelectedBahan();
+                                        insertBarangGudang();
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xff2B314A),

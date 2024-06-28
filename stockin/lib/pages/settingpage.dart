@@ -108,7 +108,7 @@ class settingPageState extends State<settingPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const inputJenisBahan()));
+                                              const  inputJenisBahan()));
                                   // Handle profile tap
                                 },
                                 child: Container(

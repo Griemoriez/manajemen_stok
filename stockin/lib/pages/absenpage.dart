@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
@@ -9,10 +11,43 @@ import 'package:stockin/pages/absenpage.dart';
 import 'package:stockin/pages/detaildivisi.dart';
 import 'package:stockin/pages/homepage.dart';
 import 'package:stockin/pages/inputbahanpage.dart';
+import 'package:http/http.dart' as http;
 
 
-class absenPage extends StatelessWidget {
+class absenPage extends StatefulWidget {
+
   const absenPage({super.key});
+
+  @override
+  State<absenPage> createState() => _absenPageState();
+}
+
+class _absenPageState extends State<absenPage> {
+
+
+List<Map<String, dynamic>> listTukang = [];
+  Future<void> detailAbsen() async{
+    String urlGetGajiTukang = "http://berkatnusantara.com:5868/gaji/pertukang/" + parameter;
+    try {
+      var req = await http.get(Uri.parse(urlGetGajiTukang));
+      if (req.statusCode == 200) {
+        final data = jsonDecode(req.body);
+        List listGet = data['data'];
+        setState(() {
+          for (var index in listGet) {
+            listTukang.add({
+              'id': index['id'],
+              'jumlah_hadir': index['jumlah_hadir'].toString(),
+              'nama': index['nama'].toString(),
+              'total_gaji' : index['total_gaji'].toString(),
+            });
+          }
+        });
+      }
+    } catch (e) {
+      print("Exception caught: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +108,7 @@ class absenPage extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "List Proyek",
+                                "List Tukang",
                                 style: TextStyle(
                                     color: Color(0xff41B06E),
                                     fontSize: 18,
