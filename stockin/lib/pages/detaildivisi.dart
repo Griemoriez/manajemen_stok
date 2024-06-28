@@ -21,7 +21,7 @@ class _detailDivisiState extends State<detailDivisi> {
   
 
 Future<void> detailDivisi() async{
-    String urlGetProyek = "http://berkatnusantara.com:5868/proyek";
+    String urlGetProyek = "http://berkatnusantara.com:5868/gaji/perdivisi";
     try {
       var req = await http.get(Uri.parse(urlGetProyek));
       if (req.statusCode == 200) {
@@ -30,9 +30,10 @@ Future<void> detailDivisi() async{
         setState(() {
           for (var index in listGet) {
             listDivisi.add({
-              'id': index['id'],
-              'nama_divisi': index['nama_divisi'].toString(),
+              'id_jenis': index['id_jenis'],
+              'jenis': index['jenis'].toString(),
               'jumlah_tukang': index['jumlah_tukang'].toString(),
+              'total_gaji' : index['total_gaji'].toString(),
             });
           }
         });
