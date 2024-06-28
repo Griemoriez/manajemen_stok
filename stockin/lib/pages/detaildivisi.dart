@@ -90,11 +90,11 @@ Future<void> detailDivisi() async{
                       GestureDetector(
                       onTap: (){
                         {
-                                Navigator.pushReplacement( 
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const absenPage())
-                                );
-                              }
+                          Navigator.pushReplacement( 
+                            context,
+                            MaterialPageRoute(builder: (context) => const absenPage())
+                          );
+                        }
                       },
                       child : div_card(
                           title: "Divisi Tukang Batu",

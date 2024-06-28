@@ -27,7 +27,7 @@ class _absenPageState extends State<absenPage> {
 
 List<Map<String, dynamic>> listTukang = [];
   Future<void> detailAbsen() async{
-    String urlGetGajiTukang = "http://berkatnusantara.com:5868/gaji/pertukang/" + parameter;
+    String urlGetGajiTukang = "http://berkatnusantara.com:5868/gaji/pertukang/";
     try {
       var req = await http.get(Uri.parse(urlGetGajiTukang));
       if (req.statusCode == 200) {
