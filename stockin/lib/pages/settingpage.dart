@@ -38,10 +38,7 @@ class settingPageState extends State<settingPage> {
                   color: Colors.white,
                   onPressed: () {
                     {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const homepage()));
+                      Navigator.pop(context);
                     }
                   },
                 ),

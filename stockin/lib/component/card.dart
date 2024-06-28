@@ -14,7 +14,7 @@ class v_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
         elevation: 4.0,
         color: Color(0xff8DECB4),

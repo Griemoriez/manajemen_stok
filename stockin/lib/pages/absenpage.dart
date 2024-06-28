@@ -37,10 +37,7 @@ class absenPage extends StatelessWidget {
                 icon: Icon(Icons.arrow_back),
                 color: Colors.white,
                 onPressed: () {{
-                                Navigator.pushReplacement( 
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const homepage())
-                                );
+                                Navigator.pop(context);
                               }},
               ),
             )

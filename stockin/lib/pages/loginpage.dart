@@ -17,14 +17,15 @@ TextEditingController usernameController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key,});
-  
+  const LoginPage({
+    super.key,
+  });
+
   @override
   State<LoginPage> createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
-
   void _showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
@@ -41,7 +42,8 @@ class LoginPageState extends State<LoginPage> {
     String username = usernameController.text;
     String pwd = passwordController.text;
 
-    String urlLoginPage = "http://berkatnusantara.com:5868/login?username=$username&password=$pwd";
+    String urlLoginPage =
+        "http://berkatnusantara.com:5868/login?username=$username&password=$pwd";
 
     try {
       var request = await http.post(Uri.parse(urlLoginPage));
@@ -61,7 +63,7 @@ class LoginPageState extends State<LoginPage> {
         print(status);
         String compareUsername = data["data"]["username"].toString();
         String comparePassword = data["data"]["password"].toString();
-        
+
         print("ini username textfield " + username);
         print(pwd);
         print("ini compare" + compareUsername);
@@ -77,7 +79,12 @@ class LoginPageState extends State<LoginPage> {
 
           // Use the context of the current state to ensure it's valid for navigation
           if (mounted) {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => homepage()));
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => homepage(
+                          username: username,
+                        )));
           }
         } else {
           print(info1);
@@ -122,12 +129,14 @@ class LoginPageState extends State<LoginPage> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0)),
                 ),
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const SizedBox(height: 50.0),
+                    const SizedBox(height: 25.0),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
@@ -143,18 +152,23 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    SizedBox(
-                      width: 380,
-                      child: TextField(
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                          hintText: "Username",
-                          labelText: "Username",
-                          contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: const BorderSide(color: Color(0xffDEDEDE), width: 4),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Expanded(
+                        child: TextField(
+                          controller: usernameController,
+                          decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color(0xff8DECB4),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12.0),
+                              labelText: 'Masukkan Username',
+                              labelStyle:
+                                  TextStyle(fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ),
@@ -174,36 +188,24 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    SizedBox(
-                      width: 380,
-                      child: TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          labelText: "Password",
-                          contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: const BorderSide(color: Color(0xffDEDEDE), width: 4),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Expanded(
+                        child: TextField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color(0xff8DECB4),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 12.0),
+                              labelText: 'Masukkan Password',
+                              labelStyle:
+                                  TextStyle(fontWeight: FontWeight.bold)),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 250),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(220, 40),
-                        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 152.0),
-                        backgroundColor: Color(0xff41B06E),
-                        foregroundColor: Color(0xffFFFFFF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      onPressed: loginHandle,
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(fontSize: 20.0, color: Color(0xffFFFFFF)),
                       ),
                     ),
                   ],
@@ -211,6 +213,29 @@ class LoginPageState extends State<LoginPage> {
               ),
             ),
           ],
+        ),
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(220, 40),
+                padding:
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 152.0),
+                backgroundColor: Color(0xff41B06E),
+                foregroundColor: Color(0xffFFFFFF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              onPressed: loginHandle,
+              child: Text(
+                "Sign in",
+                style: TextStyle(fontSize: 20.0, color: Color(0xffFFFFFF)),
+              ),
+            ),
+          ),
         ),
       ),
     );

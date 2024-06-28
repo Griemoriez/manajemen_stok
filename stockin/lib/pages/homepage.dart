@@ -11,7 +11,11 @@ import 'package:stockin/pages/listview.dart';
 import 'package:stockin/pages/settingpage.dart';
 
 class homepage extends StatefulWidget {
-  const homepage({super.key});
+  final String username;
+  const homepage({
+    Key? key,
+    required this.username,
+  }) : super(key: key);
 
   @override
   State<homepage> createState() => _HomepageState();
@@ -67,12 +71,13 @@ class _HomepageState extends State<homepage> {
         backgroundColor: Color(0xff2B314A),
         appBar: AppBar(
           title: Padding(
-            padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: Text(
               "Manajemen Stok",
               style: TextStyle(
                   color: Color(0xff41B06E),
                   fontWeight: FontWeight.bold,
+                  fontSize: 20,
                   fontFamily: 'LilitaOne'),
             ),
           ),
@@ -132,7 +137,7 @@ class _HomepageState extends State<homepage> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Hi Nathan!",
+                        "Hi ${widget.username}!",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -169,7 +174,7 @@ class _HomepageState extends State<homepage> {
                           GestureDetector(
                             onTap: () {
                               {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
@@ -193,6 +198,9 @@ class _HomepageState extends State<homepage> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           Expanded(
                               child: listview(

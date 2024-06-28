@@ -28,20 +28,23 @@ class _detailProyekState extends State<detailGudang> {
             listStokProyek.add({
               'id': index['id'],
               'nama': index['barang'],
-              'stok': int.parse(index['masuk']) - int.parse(index['keluar']),
+              'stok': int.parse(index['masuk']) - int.parse(index['keluar']) < 0
+                  ? 0
+                  : int.parse(index['masuk']) - int.parse(index['keluar']),
             });
             print(int.parse(index['masuk']) - int.parse(index['keluar']));
           }
-
+          int tempIndex = 1;
           for (var i in listStokProyek) {
             allRowTable.add(DataRow(
                 color: MaterialStateColor.resolveWith(
                     (states) => Color(0xff8DECB4)),
                 cells: [
-                  DataCell(Text(i['id'].toString())),
+                  DataCell(Text(tempIndex.toString())),
                   DataCell(Text(i['nama'])),
                   DataCell(Text(i['stok'].toString())),
                 ]));
+            tempIndex++;
           }
         });
       }
@@ -80,12 +83,8 @@ class _detailProyekState extends State<detailGudang> {
                 color: Colors.white,
                 onPressed: () {
                   {
-                          Navigator.pushReplacement( 
-                          context,
-                          MaterialPageRoute(builder: (context) => const homepage())
-                        );
-                      }
-
+                    Navigator.pop(context);
+                  }
                 },
               ),
             )

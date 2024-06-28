@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:stockin/component/cardDivisi.dart';
+import 'package:stockin/pages/homepage.dart';
 
 class detailProyek extends StatefulWidget {
   final int id;
@@ -33,7 +34,9 @@ class _detailProyekState extends State<detailProyek> {
             listStokProyek.add({
               'id': index['id'],
               'nama': index['barang'],
-              'stok': int.parse(index['masuk']) - int.parse(index['keluar']),
+              'stok': int.parse(index['masuk']) - int.parse(index['keluar']) < 0
+                  ? 0
+                  : int.parse(index['masuk']) - int.parse(index['keluar']),
             });
             print(int.parse(index['masuk']) - int.parse(index['keluar']));
           }
@@ -44,7 +47,12 @@ class _detailProyekState extends State<detailProyek> {
                     (states) => Color(0xff8DECB4)),
                 cells: [
                   DataCell(Text(i['id'].toString())),
-                  DataCell(Text(i['nama'])),
+                  DataCell(
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(i['nama']),
+                    ),
+                  ),
                   DataCell(Text(i['stok'].toString())),
                 ]));
           }
@@ -67,6 +75,31 @@ class _detailProyekState extends State<detailProyek> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+            child: Text(
+              "Manajemen Stok",
+              style: TextStyle(
+                  color: Color(0xff41B06E), fontWeight: FontWeight.bold),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0, top: 10.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: () {
+                  {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            )
+          ],
+        ),
         backgroundColor: Color(0xff2B314A),
         body: Padding(
           padding: const EdgeInsets.only(top: 40),
@@ -118,25 +151,30 @@ class _detailProyekState extends State<detailProyek> {
                         ),
                         Expanded(
                           child: SingleChildScrollView(
-                            child: DataTable(
-                              columns: [
-                                DataColumn(
-                                    label: Text(
-                                  "No.",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                                DataColumn(
-                                    label: Text("Nama Bahan",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold))),
-                                DataColumn(
-                                    label: Text("Stok",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold)))
-                              ],
-                              rows: allRowTable,
+                            scrollDirection: Axis.vertical,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: DataTable(
+                                columns: [
+                                  DataColumn(
+                                      label: Text(
+                                    "No.",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )),
+                                  DataColumn(
+                                      label: Text("Nama Bahan",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold))),
+                                  DataColumn(
+                                      label: Text("Stok",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)))
+                                ],
+                                rows: allRowTable,
+                              ),
                             ),
-                          )
+                          ),
                         )
                       ],
                     ),
